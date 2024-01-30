@@ -1,10 +1,8 @@
-import random
+
 
 
 def main():
-    word_file = open("words.txt", "r")
-    words = word_file.readlines()
-    chosen_word = random.choice(words)
+    wordle_game = WordleGame(6)
 
     for index in range(6):
         input_word = input('Gues my word?\n')
