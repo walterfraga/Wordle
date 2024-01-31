@@ -4,6 +4,10 @@ from game.evaluator.WordleEvaluator import WordleEvaluator
 from game.WordleGame import WordleGame
 from game.validator.WordleValidaor import WordleValidator
 
+YELLOW = '\033[93m{}\033[00m'
+
+GREEN = '\033[92m{}\033[00m'
+
 
 class WordleText():
     def __init__(self):
@@ -30,11 +34,8 @@ class WordleText():
                 exit(0)
         print('You were unable to guess my word.\n It was: ' + wordle_game.chosen_word)
 
-    def green(self, text):
-        return '\033[92m{}\033[00m'.format(text)
-
-    def yellow(self, text):
-        return '\033[93m{}\033[00m'.format(text)
+    def format_colour(self, colour, text):
+        return colour.format(text)
 
     def display_hints(self, wordle_guess_result):
         displayed_hint = ''
@@ -42,9 +43,9 @@ class WordleText():
             if hint['hint'] == Hint.NOT_IN_WORD:
                 displayed_hint += hint['letter']
             if hint['hint'] == Hint.WITHIN_WORD:
-                displayed_hint += self.yellow(hint['letter'])
+                displayed_hint += self.format_colour(YELLOW, hint['letter'])
             if hint['hint'] == Hint.CORRECT_PLACE:
-                displayed_hint += self.green(hint['letter'])
+                displayed_hint += self.format_colour(GREEN, hint['letter'])
         print(displayed_hint)
 
 
