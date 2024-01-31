@@ -1,18 +1,23 @@
 from Guess import Guess
+from WordleEvaluator import WordleEvaluator
 from WordleGame import WordleGame
 from WordleValidaor import WordleValidator
 
 
 def main():
     validator = WordleValidator()
-    wordle_game = WordleGame(6, validator)
+    evaluator = WordleEvaluator()
+    wordle_game = WordleGame(6, validator, evaluator)
 
     while range(wordle_game.guesses):
         input_word = input('Gues my word?\n')
         wordle_guess = wordle_game.is_chosen_word(input_word)
         if wordle_guess.guess == Guess.INVALID:
-            for reason in wordle_guess.reasons:
-                print(reason)
+            for invalid_reason in wordle_guess.invalid_reasons:
+                print(invalid_reason)
+        if wordle_guess.guess == Guess.INCORRECT:
+            print(wordle_guess.hints)
+
         if wordle_guess.guess == Guess.CORRECT:
             print("Yeah you guessed my word")
             exit(0)
