@@ -1,13 +1,13 @@
 import random
 
-from Guess import Guess
-from WordleGuess import WordleGuess
+from game.model.Guess import Guess
+from game.model.WordleGuess import WordleGuess
 
 
 class WordleGame:
 
     def __init__(self, guesses, validator, evaluator):
-        word_file = open("words.txt", "r")
+        word_file = open("game/resources/words.txt", "r")
         words = word_file.readlines()
         self.chosen_word = random.choice(words)
         self.guesses = guesses

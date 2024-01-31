@@ -1,7 +1,7 @@
-from Guess import Guess
-from WordleEvaluator import WordleEvaluator
-from WordleGame import WordleGame
-from WordleValidaor import WordleValidator
+from game.model.Guess import Guess
+from game.evaluator.WordleEvaluator import WordleEvaluator
+from game.WordleGame import WordleGame
+from game.validator.WordleValidaor import WordleValidator
 
 
 def main():
@@ -16,7 +16,8 @@ def main():
             for invalid_reason in wordle_guess.invalid_reasons:
                 print(invalid_reason)
         if wordle_guess.guess == Guess.INCORRECT:
-            print(wordle_guess.hints)
+            for hint in wordle_guess.hints:
+                print(hint['letter'] + ' ' + hint['hint'])
 
         if wordle_guess.guess == Guess.CORRECT:
             print("Yeah you guessed my word")
