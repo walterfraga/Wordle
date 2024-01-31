@@ -1,7 +1,7 @@
 import random
 
 from game.model.Guess import Guess
-from game.model.WordleGuess import WordleGuess
+from game.model.WordleGuessResult import WordleGuessResult
 
 
 class WordleGame:
@@ -17,12 +17,12 @@ class WordleGame:
     def is_chosen_word(self, guess_word):
         invalid_reason = self.validator.validate(guess_word)
         if invalid_reason is not None:
-            return WordleGuess(Guess.INVALID, invalid_reason)
+            return WordleGuessResult(Guess.INVALID, invalid_reason)
         if self.guesses == 0:
-            return WordleGuess(Guess.EXPIRED)
+            return WordleGuessResult(Guess.EXPIRED)
         if self.chosen_word == guess_word:
-            return WordleGuess(Guess.CORRECT)
+            return WordleGuessResult(Guess.CORRECT)
         else:
             self.guesses = self.guesses - 1
             hints = self.evaluator.evaluate(self.chosen_word, guess_word)
-            return WordleGuess(Guess.INCORRECT, None, hints)
+            return WordleGuessResult(Guess.INCORRECT, None, hints)

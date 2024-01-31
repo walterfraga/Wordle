@@ -1,4 +1,4 @@
-class WordleGuess:
+class WordleGuessResult:
 
     def __init__(self, guess, invalid_reasons=None, hints=None):
         self.guess = guess
