@@ -14,10 +14,10 @@ def main():
         wordle_guess = wordle_game.is_chosen_word(input_word)
         if wordle_guess.guess == Guess.INVALID:
             for invalid_reason in wordle_guess.invalid_reasons:
-                print(invalid_reason)
+                print(invalid_reason.value)
         if wordle_guess.guess == Guess.INCORRECT:
             for hint in wordle_guess.hints:
-                print(hint['letter'] + ' ' + hint['hint'])
+                print(hint['letter'] + ' ' + hint['hint'].value)
 
         if wordle_guess.guess == Guess.CORRECT:
             print("Yeah you guessed my word")

@@ -1,3 +1,6 @@
+from game.validator.InvalidWordReason import InvalidWordReason
+
+
 class WordleValidator:
 
     def __init__(self):
@@ -6,9 +9,9 @@ class WordleValidator:
     def validate(self, word):
         reasons = []
         if not len(word) == 5:
-            reasons.append('Must be 5 length')
+            reasons.append(InvalidWordReason.INVALID_LENGTH)
         if not word.isalpha():
-            reasons.append('Not alpha character')
+            reasons.append(InvalidWordReason.NOT_ALPHA)
         if not len(reasons) == 0:
             return reasons
         return None
