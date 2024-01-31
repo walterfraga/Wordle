@@ -10,12 +10,10 @@ class WordleGame:
         self.guesses = guesses
 
     def is_chosen_word(self, guess_word):
-        if (guess_word == 0):
+        if self.guesses == 0:
             return 3
         if self.chosen_word == guess_word:
             return 0
         else:
             self.guesses = self.guesses - 1
             return 1
-
-
