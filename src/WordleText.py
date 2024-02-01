@@ -1,8 +1,8 @@
-from game.evaluator.Hint import Hint
-from game.model.Guess import Guess
-from game.evaluator.WordleEvaluator import WordleEvaluator
-from game.WordleGame import WordleGame
-from game.validator.WordleValidaor import WordleValidator
+from src.game.evaluator.Hint import Hint
+from src.game.model.Guess import Guess
+from src.game.evaluator.WordleEvaluator import WordleEvaluator
+from src.game.WordleGame import WordleGame
+from src.game.validator.WordleValidaor import WordleValidator
 
 YELLOW = '\033[93m{}\033[00m'
 

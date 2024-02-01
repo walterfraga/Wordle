@@ -1,4 +1,4 @@
-from game.evaluator.Hint import Hint
+from src.game.evaluator.Hint import Hint
 
 
 class WordleEvaluator:

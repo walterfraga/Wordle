@@ -1,4 +1,4 @@
-from game.validator.InvalidWordReason import InvalidWordReason
+from src.game.validator.InvalidWordReason import InvalidWordReason
 
 
 class WordleValidator:
