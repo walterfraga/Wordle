@@ -1,3 +1,4 @@
+from game.WordPicker import WordPicker
 from src.game.evaluator.Hint import Hint
 from src.game.model.Guess import Guess
 from src.game.evaluator.WordleEvaluator import WordleEvaluator
@@ -16,7 +17,8 @@ class WordleText:
     def play(self):
         validator = WordleValidator()
         evaluator = WordleEvaluator()
-        wordle_game = WordleGame(6, validator, evaluator)
+        word_picker = WordPicker()
+        wordle_game = WordleGame(6, word_picker, validator, evaluator)
 
         print('Wordle')
         print('You have 6 chances. Try to guess the word\n')
