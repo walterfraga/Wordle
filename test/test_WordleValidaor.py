@@ -30,7 +30,7 @@ class TestWordleValidator(unittest.TestCase):
         self.assertEqual(1, len(result))
         self.assertEqual(InvalidWordReason.NOT_ALPHA.value, result[0].value)
 
-    def test_should_return_non_alpha_and_invalid_length_when_word_in_non_numerci_and_shorter_than_5(self):
+    def test_should_return_non_alpha_and_invalid_length_when_word_in_non_numeric_and_shorter_than_5(self):
         word = '1234'
         wordle_validator = WordleValidator()
         result = wordle_validator.validate(word)

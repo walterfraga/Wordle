@@ -9,7 +9,7 @@ YELLOW = '\033[93m{}\033[00m'
 GREEN = '\033[92m{}\033[00m'
 
 
-class WordleText():
+class WordleText:
     def __init__(self):
         pass
 
@@ -19,9 +19,9 @@ class WordleText():
         wordle_game = WordleGame(6, validator, evaluator)
 
         print('Wordle')
-        print('You have 6 chances. Try to guess my word\n')
+        print('You have 6 chances. Try to guess the word\n')
         while range(wordle_game.guesses):
-            input_word = input('Attempt (' + str(7 - wordle_game.guesses) + ') . Gues my word?\n')
+            input_word = input('Attempt (' + str(7 - wordle_game.guesses) + ') . Guess my word?\n')
             wordle_guess_result = wordle_game.is_chosen_word(input_word)
             if wordle_guess_result.guess == Guess.INVALID:
                 for invalid_reason in wordle_guess_result.invalid_reasons:

@@ -9,6 +9,9 @@ class WordleEvaluator:
     def evaluate(self, chosen_word, guess_word):
         hints = []
         index = 0
+        if guess_word is None or len(guess_word) == 0:
+            return None
+
         for letter in guess_word:
             if letter.upper() in chosen_word.upper():
                 if chosen_word[index] == letter:
