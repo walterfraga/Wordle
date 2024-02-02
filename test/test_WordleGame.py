@@ -27,7 +27,7 @@ class TestWordleGame(TestCase):
         # then
         self.assertEqual(Guess.INVALID.value, result.guess.value)
         self.assertEqual(invalid_reasons, result.invalid_reasons)
-        self.assertEqual(None, result.hints)
+        self.assertIsNone(result.hints)
 
     def test_should_identify_chosen_word_as_expired(self):
         # given
@@ -43,8 +43,8 @@ class TestWordleGame(TestCase):
 
         # then
         self.assertEqual(Guess.EXPIRED.value, result.guess.value)
-        self.assertEqual(None, result.invalid_reasons)
-        self.assertEqual(None, result.hints)
+        self.assertIsNone(result.invalid_reasons)
+        self.assertIsNone(result.hints)
 
     def test_should_identify_chosen_word_as_correct(self):
         # given
@@ -61,8 +61,8 @@ class TestWordleGame(TestCase):
 
         # then
         self.assertEqual(Guess.CORRECT.value, result.guess.value)
-        self.assertEqual(None, result.invalid_reasons)
-        self.assertEqual(None, result.hints)
+        self.assertIsNone(result.invalid_reasons)
+        self.assertIsNone(result.hints)
 
     def test_should_identify_chosen_word_as_incorrect(self):
         # given
@@ -80,5 +80,5 @@ class TestWordleGame(TestCase):
 
         # then
         self.assertEqual(Guess.INCORRECT.value, result.guess.value)
-        self.assertEqual(None, result.invalid_reasons)
+        self.assertIsNone(result.invalid_reasons)
         self.assertEqual(hints, result.hints)
