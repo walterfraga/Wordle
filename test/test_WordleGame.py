@@ -17,9 +17,9 @@ class TestWordleGame(TestCase):
         validator = Mock()
         validator.validate = MagicMock(return_value=invalid_reasons)
         evaluator = Mock()
-        word_picker = Mock()
+        words_service = Mock()
 
-        wordle_game = WordleGame(1, word_picker, validator, evaluator)
+        wordle_game = WordleGame(1, words_service, validator, evaluator)
 
         # when
         result = wordle_game.is_chosen_word(guess_word)
@@ -35,8 +35,8 @@ class TestWordleGame(TestCase):
         validator = Mock()
         validator.validate = MagicMock(return_value=None)
         evaluator = Mock()
-        word_picker = Mock()
-        wordle_game = WordleGame(0, word_picker, validator, evaluator)
+        words_service = Mock()
+        wordle_game = WordleGame(0, words_service, validator, evaluator)
 
         # when
         result = wordle_game.is_chosen_word(guess_word)
@@ -49,12 +49,12 @@ class TestWordleGame(TestCase):
     def test_should_identify_chosen_word_as_correct(self):
         # given
         guess_word = 'words'
-        validator = Mock()()
+        validator = Mock()
         validator.validate = MagicMock(return_value=None)
         evaluator = Mock()
-        word_picker = Mock()
-        word_picker.get_random_word = MagicMock(return_value=guess_word)
-        wordle_game = WordleGame(1, word_picker, validator, evaluator)
+        words_service = Mock()
+        words_service.get_random_word = MagicMock(return_value=guess_word)
+        wordle_game = WordleGame(1, words_service, validator, evaluator)
 
         # when
         result = wordle_game.is_chosen_word(guess_word)
@@ -72,8 +72,8 @@ class TestWordleGame(TestCase):
         evaluator = Mock()
         hints = [dict(letter='', hint=Hint.CORRECT_PLACE)]
         evaluator.evaluate = MagicMock(return_value=hints)
-        word_picker = Mock()
-        wordle_game = WordleGame(1, word_picker, validator, evaluator)
+        words_service = Mock()
+        wordle_game = WordleGame(1, words_service, validator, evaluator)
 
         # when
         result = wordle_game.is_chosen_word(guess_word)
@@ -82,3 +82,20 @@ class TestWordleGame(TestCase):
         self.assertEqual(Guess.INCORRECT.value, result.guess.value)
         self.assertIsNone(result.invalid_reasons)
         self.assertEqual(hints, result.hints)
+
+    def test_should_return_remaining_letters(self):
+        # given
+        guess_word = 'words'
+        validator = Mock()
+        validator.validate = MagicMock(return_value=None)
+        evaluator = Mock()
+        words_service = Mock()
+        words_service.get_random_word = MagicMock(return_value=guess_word)
+        wordle_game = WordleGame(1, words_service, validator, evaluator)
+
+        # when
+        wordle_game.is_chosen_word(guess_word)
+        remaining_letters = wordle_game.get_remaining_letters()
+
+        # then
+        self.assertEqual('abc efghijklmn pq  tuv xyz', ''.join(remaining_letters))

@@ -15,15 +15,17 @@ class WordleText:
         pass
 
     def play(self):
+        word_length = 5
+        number_of_guesses = 7
         validator = WordleValidator()
         evaluator = WordleEvaluator()
-        word_service = WordsService(5)
-        wordle_game = WordleGame(6, word_service, validator, evaluator)
+        word_service = WordsService(word_length)
+        wordle_game = WordleGame(number_of_guesses, word_service, validator, evaluator)
 
         print('Wordle')
         print('You have 6 chances. Try to guess the word\n')
         while range(wordle_game.guesses):
-            input_word = input('Attempt (' + str(7 - wordle_game.guesses) + ') . Guess my word?\n')
+            input_word = input('Attempt (' + str((number_of_guesses+1) - wordle_game.guesses) + ') . Guess my word?\n')
             wordle_guess_result = wordle_game.is_chosen_word(input_word)
             if wordle_guess_result.guess == Guess.INVALID:
                 for invalid_reason in wordle_guess_result.invalid_reasons:

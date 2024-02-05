@@ -1,6 +1,8 @@
 from src.game.model.Guess import Guess
 from src.game.model.WordleGuessResult import WordleGuessResult
 
+ALPHABET = 'abcdefghijklmnopqrstuvwxyz'
+
 
 class WordleGame:
 
@@ -28,7 +30,7 @@ class WordleGame:
 
     def get_remaining_letters(self):
         remaining_letters = []
-        for letter in 'abcdefghijklmnopqrstuvwxyz':
+        for letter in ALPHABET:
             if letter not in self.entered_letters:
                 remaining_letters.append(letter)
             else:
