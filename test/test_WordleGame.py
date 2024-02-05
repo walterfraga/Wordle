@@ -14,7 +14,7 @@ class TestWordleGame(TestCase):
         # given
         guess_word = 'words'
         invalid_reasons = [InvalidWordReason.INVALID_LENGTH]
-        validator = WordleValidator()
+        validator = Mock()
         validator.validate = MagicMock(return_value=invalid_reasons)
         evaluator = Mock()
         word_picker = Mock()
@@ -32,7 +32,7 @@ class TestWordleGame(TestCase):
     def test_should_identify_chosen_word_as_expired(self):
         # given
         guess_word = 'words'
-        validator = WordleValidator()
+        validator = Mock()
         validator.validate = MagicMock(return_value=None)
         evaluator = Mock()
         word_picker = Mock()
@@ -49,11 +49,11 @@ class TestWordleGame(TestCase):
     def test_should_identify_chosen_word_as_correct(self):
         # given
         guess_word = 'words'
-        validator = WordleValidator()
+        validator = Mock()()
         validator.validate = MagicMock(return_value=None)
         evaluator = Mock()
         word_picker = Mock()
-        word_picker.pick_word = MagicMock(return_value=guess_word)
+        word_picker.get_random_word = MagicMock(return_value=guess_word)
         wordle_game = WordleGame(1, word_picker, validator, evaluator)
 
         # when
@@ -67,7 +67,7 @@ class TestWordleGame(TestCase):
     def test_should_identify_chosen_word_as_incorrect(self):
         # given
         guess_word = 'words'
-        validator = WordleValidator()
+        validator = Mock()
         validator.validate = MagicMock(return_value=None)
         evaluator = Mock()
         hints = [dict(letter='', hint=Hint.CORRECT_PLACE)]

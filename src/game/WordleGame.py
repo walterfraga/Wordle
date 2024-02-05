@@ -4,8 +4,8 @@ from src.game.model.WordleGuessResult import WordleGuessResult
 
 class WordleGame:
 
-    def __init__(self, guesses, word_picker, validator, evaluator):
-        self.chosen_word = word_picker.pick_word()
+    def __init__(self, guesses, words_service, validator, evaluator):
+        self.chosen_word = words_service.get_random_word()
         self.guesses = guesses
         self.validator = validator
         self.evaluator = evaluator
