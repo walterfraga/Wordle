@@ -30,6 +30,10 @@ class WordleText:
                     print(invalid_reason.value)
             if wordle_guess_result.guess == Guess.INCORRECT:
                 self.display_hints(wordle_guess_result)
+                remaining_letter = ''
+                for letter in wordle_game.get_remaining_letters():
+                    remaining_letter += letter
+                print('remaining letter are: ' + remaining_letter)
 
             if wordle_guess_result.guess == Guess.CORRECT:
                 print("Yeah you guessed my word")
