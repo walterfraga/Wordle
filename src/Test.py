@@ -13,16 +13,20 @@ class WordleRow:
             if event.widget == child:
                 current_column_position = child.grid_info()['column']
 
-        print('current_column_position ' + str(current_column_position))
+        entered_word = ''
         for child in self.root.grid_slaves():
+            if isinstance(child, tk.Entry):
+                entered_word += child.get()
             child_column_position = child.grid_info()['column']
-            print('child_column_position ' + str(child_column_position))
             if child_column_position == current_column_position + 1:
                 if str(event.char).isalnum():
                     child.config(state='normal')
-                    print('normal ' + str(child_column_position))
+                    child.focus_set()
                 elif event.keysym != 'Tab':
                     child.config(state='disabled')
+
+        if len(entered_word) == 5 and (event.keysym == 'KP_Enter' or event.keysym == 'Return'):
+            print(entered_word)
 
         return
 
