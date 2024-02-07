@@ -34,10 +34,10 @@ class WordleUI:
         self.root = tk.Tk()
         self.root.title('Wordle')
         self.root.geometry('250x300')
-        self.root['bg'] = '#AC99F2'
+        self.root['bg'] = 'black'
 
         self.wordle_game = self.init_game()
-        title_label = tk.Label(self.root, text='Wordle')
+        title_label = tk.Label(self.root, text='Wordle', background='black', foreground='white')
         title_label.grid(row=0, columnspan=5)
         self.root.columnconfigure(0, weight=1)
 
@@ -48,10 +48,10 @@ class WordleUI:
         self.wordle_row5 = WordleRow(self, 5, 5)
         self.wordle_row6 = WordleRow(self, 6, 5)
 
-        self.status_label = tk.Label(self.root, text='')
+        self.status_label = tk.Label(self.root, text='', background='black', foreground='white')
         self.status_label.grid(row=7, columnspan=5)
 
-        self.remaining_letters = tk.Label(self.root, text='')
+        self.remaining_letters = tk.Label(self.root, text='', background='black', foreground='white')
         self.remaining_letters.grid(row=8, columnspan=5)
 
         self.current_row = self.wordle_row1
@@ -69,7 +69,9 @@ class WordleUI:
             for invalid_reason in wordle_guess_result.invalid_reasons:
                 reasons += invalid_reason.value
             self.status_label.config(text=reasons)
+            self.enable_row(self.wordle_game.guesses)
         if wordle_guess_result.guess.value == Guess.INCORRECT.value:
+            self.status_label.config(text='')
             self.current_row.set_hints(wordle_guess_result.hints)
             self.enable_row(self.wordle_game.guesses)
             remaining_letter = ''

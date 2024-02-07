@@ -67,6 +67,8 @@ class WordleRow:
             self.entries.append(entry)
 
     def start(self):
+        for child in self.entries:
+            child.delete(0, 'end')
         self.entries[0].config(state='normal')
         self.entries[0].focus_set()
 
