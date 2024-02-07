@@ -1,5 +1,7 @@
 import tkinter as tk
 
+from game.evaluator.Hint import Hint
+
 
 class WordleRow:
     # Ensured one entry in text
@@ -29,6 +31,15 @@ class WordleRow:
             self.disable_rows()
             self.wordle_ui.callback(word)
         return
+
+    def set_hints(self, hints):
+        index = 0
+        for hint in hints:
+            if hint['hint'].value == Hint.WITHIN_WORD.value:
+                self.entries[index].config(disabledbackground="yellow")
+            if hint['hint'].value == Hint.CORRECT_PLACE.value:
+                self.entries[index].config(disabledbackground="green")
+            index = index + 1
 
     def get_current_position(self, event):
         current_column_position = -1
