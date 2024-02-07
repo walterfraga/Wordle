@@ -78,7 +78,7 @@ class WordleUI:
             self.remaining_letters.config(text=remaining_letter)
 
         if wordle_guess_result.guess.value == Guess.CORRECT.value:
-            self.status_label.Text = "Yeah you guessed my word"
+            self.status_label.config(text="Yeah you guessed my word")
 
         if self.wordle_game.guesses == 0:
             self.status_label.config(text='You were unable to guess my word.\n It was: ' + self.wordle_game.chosen_word)
