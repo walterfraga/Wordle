@@ -17,7 +17,13 @@ class WordleEvaluator:
                 if chosen_word[index].upper() == letter.upper():
                     hints.append(dict(letter=letter, hint=Hint.CORRECT_PLACE))
                 else:
-                    hints.append(dict(letter=letter, hint=Hint.WITHIN_WORD))
+                    chosen_word_index = chosen_word.upper().find(letter.upper())
+                    if chosen_word_index > index:
+                        hints.append(dict(letter=letter, hint=Hint.WITHIN_WORD))
+                    elif chosen_word_index < index and hints[chosen_word_index]['hint'] != Hint.CORRECT_PLACE:
+                        hints.append(dict(letter=letter, hint=Hint.WITHIN_WORD))
+                    else:
+                        hints.append(dict(letter=letter, hint=Hint.NOT_IN_WORD))
             else:
                 hints.append(dict(letter=letter, hint=Hint.NOT_IN_WORD))
             index = index + 1

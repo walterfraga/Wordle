@@ -80,6 +80,19 @@ class TestWordleEvaluator(unittest.TestCase):
         self.assertEqual('X', result[4]['letter'])
         self.assertEqual(Hint.NOT_IN_WORD.value, result[4]['hint'].value)
 
+    def test_should_return_within_not_within_word_when_already_identified(self):
+        result = self.wordle_evaluator.evaluate(self.chosen_word, 'wwwww')
+        self.assertEqual(5, len(result))
+        self.assertEqual('w', result[0]['letter'])
+        self.assertEqual(Hint.CORRECT_PLACE.value, result[0]['hint'].value)
+        self.assertEqual('w', result[1]['letter'])
+        self.assertEqual(Hint.NOT_IN_WORD.value, result[1]['hint'].value)
+        self.assertEqual('w', result[2]['letter'])
+        self.assertEqual(Hint.NOT_IN_WORD.value, result[2]['hint'].value)
+        self.assertEqual('w', result[3]['letter'])
+        self.assertEqual(Hint.NOT_IN_WORD.value, result[3]['hint'].value)
+        self.assertEqual('w', result[4]['letter'])
+        self.assertEqual(Hint.NOT_IN_WORD.value, result[4]['hint'].value)
 
 if __name__ == '__main__':
     unittest.main()
