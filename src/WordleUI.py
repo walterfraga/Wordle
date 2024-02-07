@@ -1,42 +1,27 @@
-from tkinter import *
-from tkinter import ttk
+import tkinter as tk
 
+from WordleRow import WordleRow
 
 
 class WordleUI:
     def __init__(self):
-        pass
+        root = tk.Tk()
+        root.title('Wordle')
+        root.geometry('250x250')
+        root['bg'] = '#AC99F2'
 
-    def play(self):
-        ws = Tk()
-        ws.title('Wordle')
-        ws.geometry('430x225')
-        ws['bg'] = '#AC99F2'
+        label = tk.Label(root, text='Wordle')
+        label.grid(row=0, columnspan=5)
+        root.columnconfigure(0, weight=1)
 
-        title_panel = PanedWindow()
-        title_panel.pack(fill=BOTH, expand=1)
+        self.wordle_row1 = WordleRow(root, 1, 5)
+        #self.wordle_row2 = WordleRow(root, 2, 5)
+        #self.wordle_row3 = WordleRow(root, 3, 5)
+        #self.wordle_row4 = WordleRow(root, 4, 5)
+        #self.wordle_row5 = WordleRow(root, 5, 5)
+        #self.wordle_row6 = WordleRow(root, 6, 5)
+        root.mainloop()
 
-        title_label = Label(title_panel, text="Wordle")
-        title_panel.add(title_label)
-
-        game_panel = PanedWindow()
-        game_panel.pack(fill=BOTH, expand=1)
-
-        game_label = Label(game_panel, text="Game")
-        game_panel.add(game_label)
-
-        remaining_letters_panel = PanedWindow()
-        remaining_letters_panel.pack(fill=BOTH, expand=1)
-
-        remaining_letters_label = Label(remaining_letters_panel, text="remaining letters")
-        remaining_letters_panel.add(remaining_letters_label)
-
-
-
-
-
-        ws.mainloop()
 
 if __name__ == "__main__":
-    wordle_ui = WordleUI()
-    wordle_ui.play()
+    wordle_application = WordleUI()
