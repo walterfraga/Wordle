@@ -10,6 +10,36 @@ from game.validator.WordleValidaor import WordleValidator
 
 class WordleUI:
 
+    def restart(self):
+        self.restart_button.config(state='disabled')
+
+    def __init__(self):
+        self.root = tk.Tk()
+        self.root.title('Wordle')
+        self.root.geometry('250x300')
+        self.root['bg'] = 'black'
+        self.wordle_game = self.init_game()
+        title_label = tk.Label(self.root, text='Wordle', background='black', foreground='white')
+        title_label.grid(row=0, columnspan=5)
+        self.root.columnconfigure(0, weight=1)
+        self.wordle_row1 = WordleRow(self, 1, 5)
+        self.wordle_row2 = WordleRow(self, 2, 5)
+        self.wordle_row3 = WordleRow(self, 3, 5)
+        self.wordle_row4 = WordleRow(self, 4, 5)
+        self.wordle_row5 = WordleRow(self, 5, 5)
+        self.wordle_row6 = WordleRow(self, 6, 5)
+        self.status_label = tk.Label(self.root, text='', background='black', foreground='white')
+        self.status_label.grid(row=7, columnspan=5)
+        self.remaining_letters = tk.Label(self.root, text='', background='black', foreground='white')
+        self.remaining_letters.grid(row=8, columnspan=5)
+        self.restart_button = tk.Button(self.root, text='Play Again', background='black', foreground='white',
+                                        command=lambda: self.restart())
+        self.restart_button.grid(row=9, columnspan=5)
+        self.restart_button.config(state='disabled')
+        self.current_row = self.wordle_row1
+        self.callback()
+        self.root.mainloop()
+
     def init_game(self):
         number_of_guesses = 6
         validator = WordleValidator()
@@ -29,34 +59,6 @@ class WordleUI:
         elif guesses == 1:
             self.current_row = self.wordle_row6
         self.current_row.start()
-
-    def __init__(self):
-        self.root = tk.Tk()
-        self.root.title('Wordle')
-        self.root.geometry('250x300')
-        self.root['bg'] = 'black'
-
-        self.wordle_game = self.init_game()
-        title_label = tk.Label(self.root, text='Wordle', background='black', foreground='white')
-        title_label.grid(row=0, columnspan=5)
-        self.root.columnconfigure(0, weight=1)
-
-        self.wordle_row1 = WordleRow(self, 1, 5)
-        self.wordle_row2 = WordleRow(self, 2, 5)
-        self.wordle_row3 = WordleRow(self, 3, 5)
-        self.wordle_row4 = WordleRow(self, 4, 5)
-        self.wordle_row5 = WordleRow(self, 5, 5)
-        self.wordle_row6 = WordleRow(self, 6, 5)
-
-        self.status_label = tk.Label(self.root, text='', background='black', foreground='white')
-        self.status_label.grid(row=7, columnspan=5)
-
-        self.remaining_letters = tk.Label(self.root, text='', background='black', foreground='white')
-        self.remaining_letters.grid(row=8, columnspan=5)
-
-        self.current_row = self.wordle_row1
-        self.callback()
-        self.root.mainloop()
 
     def callback(self, word=None):
         if word is None:
@@ -83,10 +85,12 @@ class WordleUI:
         if wordle_guess_result.guess.value == Guess.CORRECT.value:
             self.status_label.config(text="Yeah you guessed my word")
             self.current_row.disable_rows('green')
+            self.restart_button.config(state='normal')
 
         if self.wordle_game.guesses == 0:
             self.status_label.config(text='You were unable to guess my word.\n It was: ' + self.wordle_game.chosen_word)
             self.current_row.disable_rows()
+            self.restart_button.config(state='normal')
 
 
 if __name__ == "__main__":
