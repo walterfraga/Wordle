@@ -14,7 +14,7 @@ class WordleEvaluator:
 
         for letter in guess_word:
             if letter.upper() in chosen_word.upper():
-                if chosen_word[index] == letter:
+                if chosen_word[index].upper() == letter.upper():
                     hints.append(dict(letter=letter, hint=Hint.CORRECT_PLACE))
                 else:
                     hints.append(dict(letter=letter, hint=Hint.WITHIN_WORD))
