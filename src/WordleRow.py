@@ -13,7 +13,7 @@ class WordleRow:
             if child == entry:
                 return child.get()
 
-    def key_press_event(self, event, entry):
+    def key_press_event(self, event):
         current_column_position = self.get_current_position(event)
         word = ''
         # travers in reverse
@@ -62,7 +62,7 @@ class WordleRow:
             self.wordle_ui.root.columnconfigure(row, weight=1)
             entry = tk.Entry(self.wordle_ui.root, width=5, validate="key", validatecommand=(validation, "%P"))
             entry.grid(row=row, column=col, pady='5')
-            entry.bind("<KeyPress>", lambda event: self.key_press_event(event, entry))
+            entry.bind("<KeyPress>", lambda event: self.key_press_event(event))
             entry.config(state='disabled')
             self.entries.append(entry)
 
