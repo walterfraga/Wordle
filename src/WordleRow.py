@@ -26,6 +26,10 @@ class WordleRow:
                     entry.focus_set()
                 elif event.keysym != 'Tab':
                     entry.config(state='disabled')
+            if child_column_position != 0 and child_column_position == current_column_position and event.keysym == 'BackSpace':
+                entry.delete(0, 'end')
+                entry.config(state='disabled')
+                self.entries[child_column_position-1].focus_set()
 
         if len(word) == 5 and (event.keysym == 'KP_Enter' or event.keysym == 'Return'):
             self.wordle_ui.callback(word)
