@@ -28,7 +28,6 @@ class WordleRow:
                     entry.config(state='disabled')
 
         if len(word) == 5 and (event.keysym == 'KP_Enter' or event.keysym == 'Return'):
-            self.disable_rows()
             self.wordle_ui.callback(word)
         return
 
@@ -49,9 +48,12 @@ class WordleRow:
                 break
         return current_column_position
 
-    def disable_rows(self):
+    def disable_rows(self, background_color=None):
         for child in self.entries:
-            child.config(state='disabled')
+            if background_color is None:
+                child.config(state='disabled')
+            else:
+                child.config(state='disabled', disabledbackground=background_color)
 
     def __init__(self, wordle_ui, row, num_entries):
         self.wordle_ui = wordle_ui

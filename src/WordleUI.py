@@ -69,10 +69,11 @@ class WordleUI:
             for invalid_reason in wordle_guess_result.invalid_reasons:
                 reasons += invalid_reason.value
             self.status_label.config(text=reasons)
-            self.enable_row(self.wordle_game.guesses)
+            self.current_row.start()
         if wordle_guess_result.guess.value == Guess.INCORRECT.value:
             self.status_label.config(text='')
             self.current_row.set_hints(wordle_guess_result.hints)
+            self.current_row.disable_rows()
             self.enable_row(self.wordle_game.guesses)
             remaining_letter = ''
             for letter in self.wordle_game.get_remaining_letters():
@@ -81,9 +82,11 @@ class WordleUI:
 
         if wordle_guess_result.guess.value == Guess.CORRECT.value:
             self.status_label.config(text="Yeah you guessed my word")
+            self.current_row.disable_rows('green')
 
         if self.wordle_game.guesses == 0:
             self.status_label.config(text='You were unable to guess my word.\n It was: ' + self.wordle_game.chosen_word)
+            self.current_row.disable_rows()
 
 
 if __name__ == "__main__":
