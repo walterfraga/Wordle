@@ -2,6 +2,10 @@ import tkinter as tk
 
 from game.evaluator.Hint import Hint
 
+WORDLE_GREEN = "#0ED644"
+
+WORDLE_YELLOW = "#CCD851"
+
 
 class WordleRow:
     # Ensured one entry in text
@@ -9,9 +13,9 @@ class WordleRow:
         return not len(text) > 1
 
     def get_letter(self, entry):
-        for child in self.wordle_ui.root.grid_slaves():
-            if child == entry:
-                return child.get()
+        for grid_entry in self.wordle_ui.root.grid_slaves():
+            if grid_entry == entry:
+                return grid_entry.get()
 
     def key_press_event(self, event):
         current_column_position = self.get_current_position(event)
@@ -40,40 +44,43 @@ class WordleRow:
         index = 0
         for hint in hints:
             if hint['hint'].value == Hint.WITHIN_WORD.value:
-                self.entries[index].config(disabledbackground="#CCD851")
+                self.entries[index].config(disabledbackground=WORDLE_YELLOW)
                 self.entries[index].config(disabledforeground="white")
             if hint['hint'].value == Hint.CORRECT_PLACE.value:
-                self.entries[index].config(disabledbackground="#0ED644")
+                self.entries[index].config(disabledbackground=WORDLE_GREEN)
                 self.entries[index].config(disabledforeground="white")
             index = index + 1
 
     def get_current_position(self, event):
         current_column_position = -1
-        for child in self.entries:
-            if event.widget == child:
-                current_column_position = child.grid_info()['column']
+        for entry in self.entries:
+            if entry == event.widget:
+                current_column_position = entry.grid_info()['column']
                 break
         return current_column_position
 
     def disable_rows(self, background_color=None):
-        for child in self.entries:
+        for entry in self.entries:
             if background_color is None:
-                child.config(state='disabled')
+                entry.config(state='disabled')
             else:
-                child.config(state='disabled', disabledbackground=background_color)
+                entry.config(state='disabled', disabledbackground=background_color)
 
-    def __init__(self, wordle_ui, row, num_entries):
+    def __init__(self, wordle_ui, row, columns):
         self.wordle_ui = wordle_ui
-        self.entries = []
+        self.entries = self.initialize_entry_columns(wordle_ui, columns, row)
 
-        validation = self.wordle_ui.root.register(self.validate_one_entry)
-        for col in range(num_entries):
-            self.wordle_ui.root.columnconfigure(row, weight=1)
-            entry = tk.Entry(self.wordle_ui.root, width=5, validate="key", validatecommand=(validation, "%P"))
-            entry.grid(row=row, column=col, pady='5')
+    def initialize_entry_columns(self, wordle_ui, columns, row):
+        entries = []
+        validation = wordle_ui.root.register(self.validate_one_entry)
+        for column in range(columns):
+            wordle_ui.root.columnconfigure(row, weight=1)
+            entry = tk.Entry(wordle_ui.root, width=5, validate="key", validatecommand=(validation, "%P"))
+            entry.grid(row=row, column=column, pady='5')
             entry.bind("<KeyPress>", lambda event: self.key_press_event(event))
             entry.config(state='disabled')
-            self.entries.append(entry)
+            entries.append(entry)
+        return entries
 
     def start(self):
         for child in self.entries:
@@ -81,5 +88,3 @@ class WordleRow:
         self.entries[0].config(state='normal')
         self.entries[0].focus_set()
 
-    def get_values(self):
-        return [entry.get() for entry in self.entries]

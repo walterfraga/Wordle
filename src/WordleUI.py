@@ -16,6 +16,7 @@ class WordleUI:
         WordleUI()
 
     def __init__(self):
+        self.wordle_game = self.init_wordle_game()
         self.root = tk.Tk()
         self.root.title('Wordle')
         self.root.geometry('250x350')
@@ -43,12 +44,11 @@ class WordleUI:
         self.restart_button.grid(row=9, columnspan=5)
         self.restart_button.config(state='disabled')
 
-        self.wordle_game = self.init_game()
         self.current_row = self.wordle_row1
         self.callback()
         self.root.mainloop()
 
-    def init_game(self):
+    def init_wordle_game(self):
         number_of_guesses = 6
         word_length = 5
         word_service = WordsService(word_length)
@@ -73,33 +73,43 @@ class WordleUI:
         if word is None:
             self.current_row.start()
             return
+
         wordle_guess_result = self.wordle_game.is_chosen_word(word)
-
         if wordle_guess_result.guess.value == Guess.INVALID.value:
-            reasons = ''
-            for invalid_reason in wordle_guess_result.invalid_reasons:
-                reasons += invalid_reason.value
-            self.status_label.config(text=reasons)
-            self.current_row.start()
+            self.invalid_guess(wordle_guess_result)
         if wordle_guess_result.guess.value == Guess.INCORRECT.value:
-            self.status_label.config(text='')
-            self.current_row.set_hints(wordle_guess_result.hints)
-            self.current_row.disable_rows()
-            self.enable_row(self.wordle_game.guesses)
-            remaining_letter = ''
-            for letter in self.wordle_game.get_remaining_letters():
-                remaining_letter += letter
-            self.remaining_letters.config(text=remaining_letter)
-
+            self.incorrect_guess(wordle_guess_result)
         if wordle_guess_result.guess.value == Guess.CORRECT.value:
-            self.status_label.config(text="Yeah you guessed my word")
-            self.current_row.disable_rows('green')
-            self.restart_button.config(state='normal')
-
+            self.correct_guess()
         if self.wordle_game.guesses == 0:
-            self.status_label.config(text='You were unable to guess my word.\n It was: ' + self.wordle_game.chosen_word)
-            self.current_row.disable_rows()
-            self.restart_button.config(state='normal')
+            self.exhausted_guess()
+
+    def exhausted_guess(self):
+        self.status_label.config(text='You were unable to guess my word.\n It was: ' + self.wordle_game.chosen_word)
+        self.current_row.disable_rows()
+        self.restart_button.config(state='normal')
+
+    def correct_guess(self):
+        self.status_label.config(text="Yeah you guessed my word")
+        self.current_row.disable_rows('green')
+        self.restart_button.config(state='normal')
+
+    def incorrect_guess(self, wordle_guess_result):
+        self.status_label.config(text='')
+        self.current_row.set_hints(wordle_guess_result.hints)
+        self.current_row.disable_rows()
+        self.enable_row(self.wordle_game.guesses)
+        remaining_letter = ''
+        for letter in self.wordle_game.get_remaining_letters():
+            remaining_letter += letter
+        self.remaining_letters.config(text=remaining_letter)
+
+    def invalid_guess(self, wordle_guess_result):
+        reasons = ''
+        for invalid_reason in wordle_guess_result.invalid_reasons:
+            reasons += invalid_reason.value
+        self.status_label.config(text=reasons)
+        self.current_row.start()
 
 
 if __name__ == "__main__":
