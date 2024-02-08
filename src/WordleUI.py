@@ -50,10 +50,11 @@ class WordleUI:
 
     def init_game(self):
         number_of_guesses = 6
-        validator = WordleValidator()
+        word_length = 5
+        word_service = WordsService(word_length)
+        validator = WordleValidator(word_length, word_service.get_all_words())
         evaluator = WordleEvaluator()
-        word_service = WordsService(5)
-        return WordleGame(number_of_guesses, word_service, validator, evaluator)
+        return WordleGame(number_of_guesses, word_service.get_random_word(), validator, evaluator)
 
     def enable_row(self, guesses):
         if guesses == 5:
