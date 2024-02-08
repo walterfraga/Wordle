@@ -29,6 +29,7 @@ class WordleRow:
             if child_column_position != 0 and child_column_position == current_column_position and event.keysym == 'BackSpace':
                 entry.delete(0, 'end')
                 entry.config(state='disabled')
+                self.entries[child_column_position-1].delete(0, 'end')
                 self.entries[child_column_position-1].focus_set()
 
         if len(word) == 5 and (event.keysym == 'KP_Enter' or event.keysym == 'Return'):
@@ -39,9 +40,11 @@ class WordleRow:
         index = 0
         for hint in hints:
             if hint['hint'].value == Hint.WITHIN_WORD.value:
-                self.entries[index].config(disabledbackground="yellow")
+                self.entries[index].config(disabledbackground="#CCD851")
+                self.entries[index].config(disabledforeground="white")
             if hint['hint'].value == Hint.CORRECT_PLACE.value:
-                self.entries[index].config(disabledbackground="green")
+                self.entries[index].config(disabledbackground="#0ED644")
+                self.entries[index].config(disabledforeground="white")
             index = index + 1
 
     def get_current_position(self, event):

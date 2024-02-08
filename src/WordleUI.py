@@ -21,7 +21,7 @@ class WordleUI:
         self.root.geometry('250x350')
         self.root['bg'] = 'black'
 
-        title_label = tk.Label(self.root, text='Wordle', background='black', foreground='white')
+        title_label = tk.Label(self.root, text='Wordle', background='black', foreground='white', font=("Helvetica", 14))
         title_label.grid(row=0, columnspan=5)
         self.root.columnconfigure(0, weight=1)
 
