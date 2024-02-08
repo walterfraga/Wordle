@@ -5,7 +5,6 @@ from game.WordleGame import WordleGame
 from game.evaluator.Hint import Hint
 from game.model.Guess import Guess
 from game.validator.InvalidWordReason import InvalidWordReason
-from game.validator.WordleValidaor import WordleValidator
 
 
 class TestWordleGame(TestCase):
@@ -17,9 +16,8 @@ class TestWordleGame(TestCase):
         validator = Mock()
         validator.validate = MagicMock(return_value=invalid_reasons)
         evaluator = Mock()
-        words_service = Mock()
 
-        wordle_game = WordleGame(1, words_service, validator, evaluator)
+        wordle_game = WordleGame(1, "tests", validator, evaluator)
 
         # when
         result = wordle_game.is_chosen_word(guess_word)
@@ -35,8 +33,7 @@ class TestWordleGame(TestCase):
         validator = Mock()
         validator.validate = MagicMock(return_value=None)
         evaluator = Mock()
-        words_service = Mock()
-        wordle_game = WordleGame(0, words_service, validator, evaluator)
+        wordle_game = WordleGame(0, "ddddd", validator, evaluator)
 
         # when
         result = wordle_game.is_chosen_word(guess_word)
@@ -52,9 +49,7 @@ class TestWordleGame(TestCase):
         validator = Mock()
         validator.validate = MagicMock(return_value=None)
         evaluator = Mock()
-        words_service = Mock()
-        words_service.get_random_word = MagicMock(return_value=guess_word)
-        wordle_game = WordleGame(1, words_service, validator, evaluator)
+        wordle_game = WordleGame(1, "words", validator, evaluator)
 
         # when
         result = wordle_game.is_chosen_word(guess_word)
@@ -72,8 +67,7 @@ class TestWordleGame(TestCase):
         evaluator = Mock()
         hints = [dict(letter='', hint=Hint.CORRECT_PLACE)]
         evaluator.evaluate = MagicMock(return_value=hints)
-        words_service = Mock()
-        wordle_game = WordleGame(1, words_service, validator, evaluator)
+        wordle_game = WordleGame(1, "sdsds", validator, evaluator)
 
         # when
         result = wordle_game.is_chosen_word(guess_word)
@@ -89,9 +83,8 @@ class TestWordleGame(TestCase):
         validator = Mock()
         validator.validate = MagicMock(return_value=None)
         evaluator = Mock()
-        words_service = Mock()
-        words_service.get_random_word = MagicMock(return_value=guess_word)
-        wordle_game = WordleGame(1, words_service, validator, evaluator)
+
+        wordle_game = WordleGame(1, "words", validator, evaluator)
 
         # when
         wordle_game.is_chosen_word(guess_word)

@@ -24,6 +24,12 @@ class TestWordleEvaluator(unittest.TestCase):
         self.assertEqual('w', result[0]['letter'])
         self.assertEqual(Hint.CORRECT_PLACE.value, result[0]['hint'].value)
 
+    def test_should_return_correct_place_for_single_letter_when_different_case(self):
+        result = self.wordle_evaluator.evaluate(self.chosen_word, 'W')
+        self.assertEqual(1, len(result))
+        self.assertEqual('W', result[0]['letter'])
+        self.assertEqual(Hint.CORRECT_PLACE.value, result[0]['hint'].value)
+
     def test_should_return_not_in_word_for_single_letter(self):
         result = self.wordle_evaluator.evaluate(self.chosen_word, 'x')
         self.assertEqual(1, len(result))
@@ -36,6 +42,14 @@ class TestWordleEvaluator(unittest.TestCase):
         self.assertEqual('x', result[0]['letter'])
         self.assertEqual(Hint.NOT_IN_WORD.value, result[0]['hint'].value)
         self.assertEqual('w', result[1]['letter'])
+        self.assertEqual(Hint.WITHIN_WORD.value, result[1]['hint'].value)
+
+    def test_should_return_not_in_word_and_within_word_even_when_different_cases(self):
+        result = self.wordle_evaluator.evaluate(self.chosen_word, 'XW')
+        self.assertEqual(2, len(result))
+        self.assertEqual('X', result[0]['letter'])
+        self.assertEqual(Hint.NOT_IN_WORD.value, result[0]['hint'].value)
+        self.assertEqual('W', result[1]['letter'])
         self.assertEqual(Hint.WITHIN_WORD.value, result[1]['hint'].value)
 
     def test_should_return_within_word_correct_place_not_in_word(self):
@@ -52,6 +66,33 @@ class TestWordleEvaluator(unittest.TestCase):
         self.assertEqual('x', result[4]['letter'])
         self.assertEqual(Hint.NOT_IN_WORD.value, result[4]['hint'].value)
 
+    def test_should_return_within_word_correct_place_not_in_word_even_when_different_cases(self):
+        result = self.wordle_evaluator.evaluate(self.chosen_word, 'SDROX')
+        self.assertEqual(5, len(result))
+        self.assertEqual('S', result[0]['letter'])
+        self.assertEqual(Hint.WITHIN_WORD.value, result[0]['hint'].value)
+        self.assertEqual('D', result[1]['letter'])
+        self.assertEqual(Hint.WITHIN_WORD.value, result[1]['hint'].value)
+        self.assertEqual('R', result[2]['letter'])
+        self.assertEqual(Hint.CORRECT_PLACE.value, result[2]['hint'].value)
+        self.assertEqual('O', result[3]['letter'])
+        self.assertEqual(Hint.WITHIN_WORD.value, result[3]['hint'].value)
+        self.assertEqual('X', result[4]['letter'])
+        self.assertEqual(Hint.NOT_IN_WORD.value, result[4]['hint'].value)
+
+    def test_should_return_within_not_within_word_when_already_identified(self):
+        result = self.wordle_evaluator.evaluate(self.chosen_word, 'wwwww')
+        self.assertEqual(5, len(result))
+        self.assertEqual('w', result[0]['letter'])
+        self.assertEqual(Hint.CORRECT_PLACE.value, result[0]['hint'].value)
+        self.assertEqual('w', result[1]['letter'])
+        self.assertEqual(Hint.NOT_IN_WORD.value, result[1]['hint'].value)
+        self.assertEqual('w', result[2]['letter'])
+        self.assertEqual(Hint.NOT_IN_WORD.value, result[2]['hint'].value)
+        self.assertEqual('w', result[3]['letter'])
+        self.assertEqual(Hint.NOT_IN_WORD.value, result[3]['hint'].value)
+        self.assertEqual('w', result[4]['letter'])
+        self.assertEqual(Hint.NOT_IN_WORD.value, result[4]['hint'].value)
 
 if __name__ == '__main__':
     unittest.main()
