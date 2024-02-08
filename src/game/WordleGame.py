@@ -6,8 +6,8 @@ ALPHABET = 'abcdefghijklmnopqrstuvwxyz'
 
 class WordleGame:
 
-    def __init__(self, guesses, words_service, validator, evaluator):
-        self.chosen_word = words_service.get_random_word()
+    def __init__(self, guesses, random_word, validator, evaluator):
+        self.chosen_word = random_word;
         self.guesses = guesses
         self.validator = validator
         self.evaluator = evaluator

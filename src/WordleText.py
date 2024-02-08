@@ -17,10 +17,11 @@ class WordleText:
     def play(self):
         word_length = 5
         number_of_guesses = 7
-        validator = WordleValidator()
-        evaluator = WordleEvaluator()
         word_service = WordsService(word_length)
-        wordle_game = WordleGame(number_of_guesses, word_service, validator, evaluator)
+
+        validator = WordleValidator(word_length, word_service.get_all_words())
+        evaluator = WordleEvaluator()
+        wordle_game = WordleGame(number_of_guesses, word_service.get_random_word(), validator, evaluator)
 
         print('Wordle')
         print('You have 6 chances. Try to guess the word\n')
